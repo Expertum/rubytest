@@ -1,0 +1,12 @@
+ <show-page>
+
+     <parent-link: replace></parent-link:>
+
+     <content-header:>
+
+     </content-header:>
+
+    <field-list: replace>
+
+    </field-list:>
+ </show-page>

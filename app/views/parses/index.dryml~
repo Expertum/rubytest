@@ -1,0 +1,47 @@
+<index-page>
+    <content-header:>
+    </content-header:>
+
+  <collection: replace>
+    <% @h =[]%>
+    <%@files = Dir.glob('../rubytest/tmp/parse_files/U*_*_*')%>
+
+    <% @files.each_with_index{|x,i| @e = {:id => x._?.split('/').last._?.split('_')[0], :type => x._?.split('/').last._?.split('_')[1], :date => x._?.split('/').last._?.split('_')[2]._?.split('.')[0], :url => x.to_s}; @h.push(@e) }%>
+
+
+
+  <% @h.chunk{ |hash| hash[:id] }.map(&:last).each do |x|%>
+     <strong><%=x.first[:id]%></strong>
+     <% x.group_by{ |hash| hash[:date] }.each do |y|%>
+       <br/>
+      <ul>
+       <li><%= y[0].to_date%></li>
+       <ul>
+         <%y[1].each do |c|%>
+           <li><%= c[:type]%>, <a href="#" onclick="$('#content_#{c[:date]}_#{c[:type]}').toggle();return false"><%= c[:url]%></a></li>
+           <%     @ff=''
+                       File.open(c[:url], 'r') do |f|
+                         f.each_line do |line|
+                          @ff = @ff + line
+                          end
+                       end
+                       %>
+           <li id="content_#{c[:date]}_#{c[:type]}" style="display:none;"><%=@ff%></li>
+         <%end%>
+       </ul>
+      </ul>
+    <%end%>
+  <%end%>
+
+
+
+
+
+
+ 
+
+
+  </collection:>
+  <bottom-page-nav: replace/>
+</index-page>
+
